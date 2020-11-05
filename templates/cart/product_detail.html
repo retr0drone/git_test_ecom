@@ -26,6 +26,7 @@
             <div class="block-4-text p-4">
                 <h2 class="text-black">{{ product.title }}</h2>
                 <p>{{ product.description }}</p>
+                <strong><h3>${{ product.get_price }}</h3></strong>
                 <form method="POST">
                   {% csrf_token %}
                     {{ form|crispy }}
