@@ -22,11 +22,24 @@ class ProductDetailView(generic.FormView):
     def get_success_url(self):
         return reverse('home')  #todo cart
 
+    # passing product_id from forms to views to allow colors appear
+    def get_form_kwargs(self):
+        kwargs = super(ProductDetailView, self).get_form_kwargs()
+        kwargs['product_id'] = self.get_object().id #get Product instance & pass product_id and pass into the form
+        return kwargs
+
+
     def form_valid(self, form):
         order = get_or_set_order_session(self.request)
         product = self.get_object()
 
-        item_filter = order.items.filter(product=product)
+        '''on selecting add cart button this ensures no errors'''
+        item_filter = order.items.filter(
+            product=product,
+            color=form.cleaned_data['color'],
+            size=form.cleaned_data['size']        )
+
+
         if item_filter.exists():
             item = item_filter.first()
             item.quantity = int(form.cleaned_data['quantity']) # quantity from forms.py
@@ -35,7 +48,7 @@ class ProductDetailView(generic.FormView):
         else:
             new_item = form.save(commit=False) #saves an OrderItem instance commit False = Not saving session info yet
             new_item.product = product
-            new_item.order = order #order from the session
+            new_item.order = order  #order from the session
             new_item.save()
         return super(ProductDetailView, self).form_valid(form)
 
