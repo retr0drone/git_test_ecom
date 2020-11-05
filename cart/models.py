@@ -62,7 +62,8 @@ class Product(models.Model):
         return reverse('cart:product-detail', kwargs={'slug': self.slug})
 
     def get_price(self):
-        return '{:.2f}'.format(self.price / 100)
+        return '{:,}'.format(self.price / 100)
+    
 
     
 class OrderItem(models.Model):
