@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
           integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
+    <script src="https://kit.fontawesome.com/8117326c4c.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -65,7 +66,7 @@
                                     {% endif %}
                                 </li>
                                 <li>
-                                    <a href="/" class="site-cart">
+                                    <a href="{% url 'cart:summary' %}" class="site-cart">
                                         <span><i class="fas fa-shopping-cart"></i></span>
                                         <span class="count">0</span>
                                     </a>

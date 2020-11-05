@@ -37,7 +37,8 @@ class ProductDetailView(generic.FormView):
         item_filter = order.items.filter(
             product=product,
             color=form.cleaned_data['color'],
-            size=form.cleaned_data['size']        )
+            size=form.cleaned_data['size']
+        )
 
 
         if item_filter.exists():
@@ -55,4 +56,13 @@ class ProductDetailView(generic.FormView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context['product'] = self.get_object()
+        return context
+
+
+class CartView(generic.TemplateView):
+    template_name = 'cart/cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CartView, self).get_context_data(**kwargs)
+        context['order'] = get_or_set_order_session(self.request)
         return context
